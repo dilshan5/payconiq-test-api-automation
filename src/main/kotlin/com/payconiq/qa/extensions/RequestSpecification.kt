@@ -33,5 +33,4 @@ fun RequestSpecification.setHeaders(keyValues: Map<String, String?>): RequestSpe
  * Including a content json type body in the request
  */
 fun RequestSpecification.setJSONBody(jsonString: String): RequestSpecification =
-    contentType("application/json")
-        .body(jsonString)
+    body(jsonString)
