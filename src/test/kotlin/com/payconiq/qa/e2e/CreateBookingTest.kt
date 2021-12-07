@@ -37,6 +37,7 @@ import org.junit.jupiter.params.provider.MethodSource
  * @author: Dilshan Fernando
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class CreateBookingTest : OAuth() {
 
     @BeforeAll
@@ -46,6 +47,7 @@ class CreateBookingTest : OAuth() {
     }
 
     @Test
+    @Order(1)
     @Tags(Tag(PIPELINE_1), Tag(REGRESSION))
     fun `IDE-0001 - Verify user get HTTP 200 response when Create Booking with valid booking details`() {
         //set request headers
@@ -127,7 +129,7 @@ class CreateBookingTest : OAuth() {
     @ParameterizedTest
     @EmptySource
     @MethodSource("com.payconiq.qa.data.CreateBookingData#invalidBookingData")
-    @Tags(Tag(PIPELINE_1), Tag(REGRESSION))
+    @Tags(Tag(REGRESSION))
     fun `IDE-0005 - Verify user get HTTP 400 response when Create Booking with invalid booking details`(bookingData: Map<String, Any?>) {
         //get values for Booking
         val firstName: Any? = bookingData[CreateBookingData.Companion.Keys.FIRST_NAME]
@@ -159,6 +161,24 @@ class CreateBookingTest : OAuth() {
             post(CREATE_BOOKING_RESOURCE_PATH)
         } Then {
             validateErrorResponse(400, "Invalid Booking Request", "Please check the Booking details")
+        }
+    }
+
+    @Test
+    @Order(2)
+    @Tags(Tag(REGRESSION))
+    fun `IDE-0006 - Verify user get HTTP 409 response when same Booking is requested again`() {
+        //set request headers
+        val headers = mutableMapOf<String, String>()
+        headers[CONTENT_TYPE_HEADER] = "application/json"
+
+        Given {
+            setHeaders(headers.toMap())
+            setJSONBody(generateValidBookingDetails().trimIndent())
+        } When {
+            post("/bookings")
+        } Then {
+            validateErrorResponse(409, "Conflict Record Found", "This booking has already done")
         }
     }
 

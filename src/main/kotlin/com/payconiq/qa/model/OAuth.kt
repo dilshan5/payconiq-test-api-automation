@@ -52,7 +52,7 @@ open class OAuth : TestBase() {
         private fun ValidatableResponse.successfulTokenResponse(): ValidatableResponse =
             statusCode(HttpStatus.SC_OK)
                 .body("token", CoreMatchers.notNullValue())
-        //NOTE: The below header verification should be there as per RFC standard. BUT I have commented inorder to execute the classes
+        //NOTE: The below header verification should be there as per RFC standard. BUT I have commented inorder to execute the test classes
 /*                .headers(
                     mapOf(
                         "Cache-Control" to "no-store",
