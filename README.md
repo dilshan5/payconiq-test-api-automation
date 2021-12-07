@@ -15,8 +15,8 @@ This requires [Java JDK](https://www.oracle.com/java/technologies/javase-downloa
 You can open the project by any IDE (Select `pom.xml` file when opening the project)
 
 In this project you can find two branches:
-- Master - Contain up-to-date code
-- Working - In progress development of the Test cases
+- master - Contain up-to-date code
+- develop - In progress development of the Test cases
 
 
 ## Set up the Project
