@@ -1,0 +1,6 @@
+host: restful-booker.herokuapp.com
+environment: QA
+release: v1.0
+client:
+  userName: test
+  password: test
