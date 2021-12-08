@@ -5,6 +5,7 @@ import com.payconiq.qa.data.CreateBookingData.Companion.CHECK_IN
 import com.payconiq.qa.data.CreateBookingData.Companion.CHECK_OUT
 import com.payconiq.qa.data.CreateBookingData.Companion.DEPOSIT_PAID
 import com.payconiq.qa.data.CreateBookingData.Companion.TOTAL_PRICE
+import com.payconiq.qa.data.CreateBookingData.Companion.UPDATED_ADDITIONAL_NEEDS
 import com.payconiq.qa.data.CreateBookingData.Companion.UPDATED_DEPOSIT_PAID
 import com.payconiq.qa.data.CreateBookingData.Companion.UPDATED_FIRST_NAME
 import com.payconiq.qa.data.CreateBookingData.Companion.UPDATED_LAST_NAME
@@ -26,6 +27,7 @@ import com.payconiq.qa.util.CommonConstants.Header.COOKIE
 import com.payconiq.qa.util.CommonConstants.TestTag.PIPELINE_1
 import com.payconiq.qa.util.CommonConstants.TestTag.REGRESSION
 import com.payconiq.qa.util.ConfigurationSpecification
+import io.restassured.http.ContentType
 import io.restassured.module.kotlin.extensions.Given
 import io.restassured.module.kotlin.extensions.Then
 import io.restassured.module.kotlin.extensions.When
@@ -223,7 +225,7 @@ class PartialUpdateBookingTest : OAuth() {
         } When {
             put("${UPDATE_BOOKING_RESOURCE_PATH}/20381")
         } Then {
-            validateErrorResponse(404, "Invalid Request", "Please check the BookingID")
+            validateErrorResponse(404, "Record Not Found", "Please check the BookingID")
         }
     }
 
@@ -353,6 +355,37 @@ class PartialUpdateBookingTest : OAuth() {
                 CHECK_IN,
                 CHECK_OUT,
                 ADDITIONAL_NEEDS
+            )
+        }
+    }
+
+    @Test
+    @Order(11)
+    @Tags(Tag(PIPELINE_1), Tag(REGRESSION))
+    fun `IDE-3010 - Verify user get HTTP 200 response when Partial Update a Booking - URL Encoded`() {
+        //set request headers
+        val headers = mutableMapOf<String, String>()
+        headers[ACCEPT] = "application/x-www-form-urlencoded"
+
+        Given {
+            setHeaders(headers.toMap())
+            preemptiveBasicAuth(
+                ConfigurationSpecification.getUserName(),
+                ConfigurationSpecification.getPassword()
+            )
+            contentType(ContentType.URLENC)
+            formParam(ADDITIONAL_NEEDS, UPDATED_ADDITIONAL_NEEDS)
+        } When {
+            put("${UPDATE_BOOKING_RESOURCE_PATH}/${bookingID}")
+        } Then {
+            validateResponseUpdateBooking(
+                UPDATED_FIRST_NAME,
+                UPDATED_LAST_NAME,
+                UPDATED_TOTAL_PRICE,
+                UPDATED_DEPOSIT_PAID,
+                CHECK_IN,
+                CHECK_OUT,
+                UPDATED_ADDITIONAL_NEEDS
             )
         }
     }

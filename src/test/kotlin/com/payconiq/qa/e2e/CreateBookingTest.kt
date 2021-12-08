@@ -132,13 +132,13 @@ class CreateBookingTest : OAuth() {
     @Tags(Tag(REGRESSION))
     fun `IDE-0005 - Verify user get HTTP 400 response when Create Booking with invalid booking details`(bookingData: Map<String, Any?>) {
         //get values for Booking
-        val firstName: Any? = bookingData[CreateBookingData.Companion.Keys.FIRST_NAME]
-        val lastName: Any? = bookingData[CreateBookingData.Companion.Keys.LAST_NAME]
-        val totalPrice: Any? = bookingData[CreateBookingData.Companion.Keys.TOTAL_PRICE]
-        val depositPaid: Any? = bookingData[CreateBookingData.Companion.Keys.DEPOSIT_PAID]
-        val checkIN: Any? = bookingData[CreateBookingData.Companion.Keys.CHECK_IN]
-        val checkOUT: Any? = bookingData[CreateBookingData.Companion.Keys.CHECK_OUT]
-        val additionalNeeds: Any? = bookingData[CreateBookingData.Companion.Keys.ADDITIONAL_NEEDS]
+        val firstName: Any? = bookingData[CreateBookingData.Companion.Keys.KEY_FIRST_NAME]
+        val lastName: Any? = bookingData[CreateBookingData.Companion.Keys.KEY_LAST_NAME]
+        val totalPrice: Any? = bookingData[CreateBookingData.Companion.Keys.KEY_TOTAL_PRICE]
+        val depositPaid: Any? = bookingData[CreateBookingData.Companion.Keys.KEY_DEPOSIT_PAID]
+        val checkIN: Any? = bookingData[CreateBookingData.Companion.Keys.KEY_CHECK_IN]
+        val checkOUT: Any? = bookingData[CreateBookingData.Companion.Keys.KEY_CHECK_OUT]
+        val additionalNeeds: Any? = bookingData[CreateBookingData.Companion.Keys.KEY_ADDITIONAL_NEEDS]
 
         Given {
             setJSONBody(
