@@ -43,10 +43,10 @@ class DeleteBookingTest : OAuth() {
     @Test
     @Order(1)
     @Tags(Tag(PIPELINE_1), Tag(REGRESSION))
-    fun `IDE-2001 - Verify user get HTTP 415 response when Create Booking with invalid Content-Type`() {
+    fun `IDE-2001 - Verify user get HTTP 415 response when Delete Booking with invalid Content-Type`() {
         //set request headers
         val headers = mutableMapOf<String, String>()
-        headers[CONTENT_TYPE_HEADER] = "application/x-www-form-urlencoded"
+        headers[CONTENT_TYPE_HEADER] = "text/plain"
         headers[COOKIE] = "token=$accessToken"
 
         Given {
@@ -59,9 +59,26 @@ class DeleteBookingTest : OAuth() {
     }
 
     @Test
+    @Order(7)
+    @Tags(Tag(PIPELINE_1), Tag(REGRESSION))
+    fun `IDE-2009 - Verify user get HTTP 401 response when Delete Booking without Cookie header`() {
+        //set request headers
+        val headers = mutableMapOf<String, String>()
+        headers[CONTENT_TYPE_HEADER] = "application/json"
+
+        Given {
+            setHeaders(headers.toMap())
+        } When {
+            delete("$DELETE_BOOKING_RESOURCE_PATH/$bookingID")
+        } Then {
+            validateErrorResponse(401, "Unauthorized", "Please check the Cookie value")
+        }
+    }
+
+    @Test
     @Order(2)
     @Tags(Tag(PIPELINE_1), Tag(REGRESSION))
-    fun `IDE-2002 - Verify user get HTTP 401 response when Create Booking with invalid Cookie value`() {
+    fun `IDE-2002 - Verify user get HTTP 401 response when Delete Booking with invalid Cookie value`() {
         //set request headers
         val headers = mutableMapOf<String, String>()
         headers[CONTENT_TYPE_HEADER] = "application/json"
@@ -77,7 +94,7 @@ class DeleteBookingTest : OAuth() {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     @Tags(Tag(PIPELINE_1), Tag(REGRESSION))
     fun `IDE-2003 - Verify user get HTTP 200 response when Delete Booking - Basic OAuth`() {
         //set request headers
@@ -98,7 +115,7 @@ class DeleteBookingTest : OAuth() {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     @Tags(Tag(PIPELINE_1), Tag(REGRESSION))
     fun `IDE-2004 - Verify user get HTTP 200 response when Delete Booking - Cookie`() {
         //delete above created booking
@@ -123,7 +140,7 @@ class DeleteBookingTest : OAuth() {
     @Test
     @Order(3)
     @Tags(Tag(PIPELINE_1), Tag(REGRESSION))
-    fun `IDE-2005 - Verify user get HTTP 401 response when Create Booking with invalid token - Basic OAuth`() {
+    fun `IDE-2005 - Verify user get HTTP 401 response when Delete Booking with invalid token - Basic OAuth`() {
         //set request headers
         val headers = mutableMapOf<String, String>()
         headers[CONTENT_TYPE_HEADER] = "application/json"
@@ -162,7 +179,7 @@ class DeleteBookingTest : OAuth() {
         } When {
             delete("$DELETE_BOOKING_RESOURCE_PATH/$bookingIDs")
         } Then {
-            validateErrorResponse(400, "Invalid Request", "Please check the Booking details")
+            validateErrorResponse(400, "Bad Request", "Please check the Booking details")
         }
     }
 
@@ -183,7 +200,7 @@ class DeleteBookingTest : OAuth() {
         } When {
             delete("$DELETE_BOOKING_RESOURCE_PATH/45926")
         } Then {
-            validateErrorResponse(404, "Invalid Request", "Please check the BookingID")
+            validateErrorResponse(404, "Record Not Found", "Please check the BookingID")
         }
     }
 
@@ -202,7 +219,7 @@ class DeleteBookingTest : OAuth() {
                 ConfigurationSpecification.getPassword()
             )
         } When {
-            patch("$DELETE_BOOKING_RESOURCE_PATH/$bookingID")
+            post("$DELETE_BOOKING_RESOURCE_PATH/$bookingID")
         } Then {
             validateErrorResponse(405, "Method Not Allowed", "Please check the HTTP Method")
         }

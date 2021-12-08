@@ -80,7 +80,7 @@ class CreateBookingTest : OAuth() {
     fun `IDE-0002 - Verify user get HTTP 415 response when Create Booking with invalid Content-Type`() {
         //set request headers
         val headers = mutableMapOf<String, String>()
-        headers[CONTENT_TYPE_HEADER] = "application/x-www-form-urlencoded"
+        headers[CONTENT_TYPE_HEADER] = "text/plain"
 
         Given {
             setHeaders(headers.toMap())

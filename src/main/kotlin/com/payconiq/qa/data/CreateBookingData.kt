@@ -15,6 +15,11 @@ class CreateBookingData {
         const val CHECK_OUT = "2019-01-01"
         const val ADDITIONAL_NEEDS = "Breakfast"
 
+        const val UPDATED_FIRST_NAME = "Samantha"
+        const val UPDATED_LAST_NAME = "Perera"
+        const val UPDATED_TOTAL_PRICE = 321
+        const val UPDATED_DEPOSIT_PAID = false
+
         object Keys {
             const val FIRST_NAME = "firstname"
             const val LAST_NAME = "lastname"

@@ -5,17 +5,16 @@ import io.restassured.response.ValidatableResponse
 import org.apache.http.HttpStatus
 import org.hamcrest.CoreMatchers
 
-class CreateBooking : TestBase() {
+class PartialUpdateBooking : TestBase() {
 
     companion object {
-        const val CREATE_BOOKING_RESOURCE_PATH = "/booking"
-        var bookingID: Int = 0
+        const val UPDATE_BOOKING_RESOURCE_PATH = "/booking"
         var accessToken = ""
 
         /**
-         * Method for checking response bodies & headers for Create Booking
+         * Method for checking response bodies & headers for update Booking
          */
-        fun ValidatableResponse.validateResponseCreateBooking(
+        fun ValidatableResponse.validateResponseUpdateBooking(
             firstName: String,
             lastName: String,
             totalPrice: Int,
@@ -25,7 +24,6 @@ class CreateBooking : TestBase() {
             additionalNeeds: String
         ): ValidatableResponse =
             statusCode(HttpStatus.SC_OK)
-                .body("bookingid", CoreMatchers.isA(Int::class.java))
                 .body("booking.firstname", CoreMatchers.`is`(firstName))
                 .body("booking.lastname", CoreMatchers.`is`(lastName))
                 .body("booking.totalprice", CoreMatchers.`is`(totalPrice))

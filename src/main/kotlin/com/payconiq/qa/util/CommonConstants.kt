@@ -15,6 +15,7 @@ class CommonConstants {
     object Header {
         const val CONTENT_TYPE_HEADER = "Content-Type"
         const val COOKIE = "Cookie"
+        const val ACCEPT = "Accept"
     }
 
 }
