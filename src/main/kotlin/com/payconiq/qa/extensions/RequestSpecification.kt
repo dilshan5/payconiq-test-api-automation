@@ -34,3 +34,9 @@ fun RequestSpecification.setHeaders(keyValues: Map<String, String?>): RequestSpe
  */
 fun RequestSpecification.setJSONBody(jsonString: String): RequestSpecification =
     body(jsonString)
+
+/**
+ * Encoding userName & password by Base64 encoded method
+ */
+fun RequestSpecification.preemptiveBasicAuth(userName: String, password: String): RequestSpecification =
+    auth().preemptive().basic(userName, password)

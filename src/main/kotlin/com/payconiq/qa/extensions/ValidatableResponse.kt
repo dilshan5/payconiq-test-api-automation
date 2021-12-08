@@ -11,9 +11,9 @@ import org.hamcrest.CoreMatchers
 
 /**
  * Verify the error response headers and body
- * Error response should follow standard:
+ * Error response should follow RFC standard:
  * RFC-7807 - Problem Details for HTTP APIs: https://datatracker.ietf.org/doc/html/rfc7807
- *
+ * Responses to POST, PUT and DELETE methods are not cacheable, unless the response includes appropriate Cache-Control or Expires header fields.
  * For this exercise, I have assumed, Content-Type type to be NOT text/plain;
  */
 fun ValidatableResponse.validateErrorResponse(
@@ -27,6 +27,7 @@ fun ValidatableResponse.validateErrorResponse(
         mapOf(
             "Connection" to "keep-alive",
             "content-length" to CoreMatchers.notNullValue(),
-            "Content-Type" to "application/json; charset=utf-8"
+            "Content-Type" to "application/json; charset=utf-8",
+            "Etag" to CoreMatchers.notNullValue(),
         )
     )

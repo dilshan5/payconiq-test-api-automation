@@ -7,6 +7,7 @@ class DeleteBooking {
 
     companion object {
         const val DELETE_BOOKING_RESOURCE_PATH = "/booking"
+        var accessToken = ""
 
         /**
          * Verify the response of DELETE booking

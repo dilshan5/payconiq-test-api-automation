@@ -164,24 +164,6 @@ class CreateBookingTest : OAuth() {
         }
     }
 
-    @Test
-    @Order(2)
-    @Tags(Tag(REGRESSION))
-    fun `IDE-0006 - Verify user get HTTP 409 response when same Booking is requested again`() {
-        //set request headers
-        val headers = mutableMapOf<String, String>()
-        headers[CONTENT_TYPE_HEADER] = "application/json"
-
-        Given {
-            setHeaders(headers.toMap())
-            setJSONBody(generateValidBookingDetails().trimIndent())
-        } When {
-            post("/bookings")
-        } Then {
-            validateErrorResponse(409, "Conflict Record Found", "This booking has already done")
-        }
-    }
-
 
     @AfterAll
     fun clearTestData() {
