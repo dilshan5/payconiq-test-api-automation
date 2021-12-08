@@ -9,8 +9,13 @@ import com.payconiq.qa.data.CreateBookingData.Companion.Keys.KEY_FIRST_NAME
 import com.payconiq.qa.data.CreateBookingData.Companion.Keys.KEY_LAST_NAME
 import com.payconiq.qa.data.CreateBookingData.Companion.LAST_NAME
 import com.payconiq.qa.extensions.*
+import com.payconiq.qa.model.CreateBooking
 import com.payconiq.qa.model.CreateBooking.Companion.bookingID
+import com.payconiq.qa.model.DeleteBooking.Companion.DELETE_BOOKING_RESOURCE_PATH
+import com.payconiq.qa.model.DeleteBooking.Companion.validateResponseDeleteBooking
 import com.payconiq.qa.model.GetBookingIds
+import com.payconiq.qa.util.CommonConstants.Header.CONTENT_TYPE_HEADER
+import com.payconiq.qa.util.CommonConstants.Header.COOKIE
 import com.payconiq.qa.util.CommonConstants.TestTag.PIPELINE_1
 import com.payconiq.qa.util.CommonConstants.TestTag.REGRESSION
 import io.restassured.module.kotlin.extensions.Extract
@@ -118,5 +123,21 @@ class GetBookingIdsTest : GetBookingIds() {
             validateGetBookings(bookingID)
         }
 
+    }
+
+    @AfterAll
+    fun clearTestData() {
+        //delete above created booking
+        val headers = mutableMapOf<String, String>()
+        headers[CONTENT_TYPE_HEADER] = "application/json"
+        headers[COOKIE] = "token=${CreateBooking.accessToken}"
+
+        Given {
+            setHeaders(headers.toMap())
+        } When {
+            delete("${DELETE_BOOKING_RESOURCE_PATH}/$bookingID")
+        } Then {
+            validateResponseDeleteBooking()
+        }
     }
 }
