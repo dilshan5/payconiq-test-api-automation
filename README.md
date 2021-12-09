@@ -21,8 +21,9 @@ In this project you can find two branches:
 
 ## Set up the Project
 
-You can set your project configurations in `config.yml`. Please make sure you DO NOT commit sensitive information in this file.
-You can pass those data via your CI/CD tools during the execution.
+- You can set your project configurations in `src/main/resources/config.yaml`. eg: userName and password required to generate token
+- Please make sure you DO NOT commit sensitive information in this file. 
+- You can pass those data via your CI/CD tools during the execution.
 
 ## Continuous Integration/Continuous Deployment with Jenkins
 
