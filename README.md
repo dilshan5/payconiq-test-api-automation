@@ -32,11 +32,24 @@ How to create [Jenkinsfile](https://www.jenkins.io/doc/book/pipeline/jenkinsfile
 
 ## Running Test Suites
 
-- Regression tests (excluding wip tests) - `mvn clean test -Pprofile=regressionTest`
-- Developer PipeLine tests (excluding wip tests) - `mvn clean test -Pprofile=pipeLine1_Test`
-- All test cases - `mvn clean install test`
+- Regression tests (excluding wip tests) - `mvn clean site -P regressionTest`
+- Developer PipeLine tests (excluding wip tests) - `mvn clean site -P pipeLine1_Test`
+- All test cases - `mvn clean install site test`
 
 Default test suite will be `regressionTest`.
+
+# Test Reports
+
+You can find following types of reports:
+
+- "Dependency Information" Report `target/site/dependency-info.html`
+- "Dependency Management" Report  `target/site/dependency-management.html`
+- "About" Report  `target/site/index.html`
+- "Plugin Management" Report  `target/site/plugin-management.html`
+- "Plugins" Report `target/site/plugins.html`
+- "Project Summary" Report   `target/site/summary.html`
+- "Team" Report    `target/site/team.html`
+- "Test Execution Summary" Report    `target/site/surefire-report.html`
 
 ## Adding custom test tasks
 

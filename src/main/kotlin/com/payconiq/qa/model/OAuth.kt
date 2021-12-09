@@ -1,5 +1,6 @@
 package com.payconiq.qa.model
 
+import com.payconiq.qa.extensions.setHeaders
 import io.restassured.module.kotlin.extensions.Extract
 import io.restassured.module.kotlin.extensions.Given
 import io.restassured.module.kotlin.extensions.Then
@@ -8,7 +9,7 @@ import io.restassured.response.ValidatableResponse
 import org.apache.http.HttpStatus
 import org.hamcrest.CoreMatchers
 import com.payconiq.qa.extensions.setJSONBody
-import com.payconiq.qa.util.CommonConstants.Header.CONTENT_TYPE_HEADER
+import com.payconiq.qa.util.CommonConstants
 import com.payconiq.qa.util.ConfigurationSpecification
 import com.payconiq.qa.util.TestBase
 
@@ -21,7 +22,12 @@ open class OAuth : TestBase() {
          * Get access token when UserName & Password is given from a successful token response
          */
         fun getBasicAccessToken(): String {
+            //set request headers
+            val headers = mutableMapOf<String, String>()
+            headers[CommonConstants.Header.CONTENT_TYPE_HEADER] = "application/json"
+
             return Given {
+                setHeaders(headers.toMap())
                 setJSONBody(
                     """
                 {
@@ -46,7 +52,7 @@ open class OAuth : TestBase() {
         private fun ValidatableResponse.successfulTokenResponse(): ValidatableResponse =
             statusCode(HttpStatus.SC_OK)
                 .body("token", CoreMatchers.notNullValue())
-        //NOTE: The below header verification should be there as per RFC standard. BUT I have commented inorder to execute the classes
+        //NOTE: The below header verification should be there as per RFC standard. BUT I have commented inorder to execute the test classes
 /*                .headers(
                     mapOf(
                         "Cache-Control" to "no-store",

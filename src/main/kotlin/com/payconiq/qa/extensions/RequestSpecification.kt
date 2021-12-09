@@ -33,5 +33,10 @@ fun RequestSpecification.setHeaders(keyValues: Map<String, String?>): RequestSpe
  * Including a content json type body in the request
  */
 fun RequestSpecification.setJSONBody(jsonString: String): RequestSpecification =
-    contentType("application/json")
-        .body(jsonString)
+    body(jsonString)
+
+/**
+ * Encoding userName & password by Base64 encoded method
+ */
+fun RequestSpecification.preemptiveBasicAuth(userName: String, password: String): RequestSpecification =
+    auth().preemptive().basic(userName, password)
