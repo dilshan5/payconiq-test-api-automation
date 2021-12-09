@@ -94,9 +94,9 @@ void setParamsAsEnvironmentVars() {
 }
 
 void test() {
-    sh 'mvn clean test -Pprofile=$TEST_SUITE_COMMAND -DENVIRONMENT=$ENVIRONMENT -DRELEASE=$RELEASE'
+    sh 'mvn clean site -P $TEST_SUITE_COMMAND -DENVIRONMENT=$ENVIRONMENT -DRELEASE=$RELEASE'
 }
 
 void clean() {
-    sh 'mvn clean install'
+    sh 'mvn clean'
 }
